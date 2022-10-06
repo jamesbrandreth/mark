@@ -1,0 +1,17 @@
+---
+version: 0.0
+title: A Test Mark Document
+class: article
+date: 2022-10-06
+---
+
+# Here's a heading
+Here's some text.
+
+## Here's a subheading
+
+
+---
+bibliography:
+  - a thing
+---
