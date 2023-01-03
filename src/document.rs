@@ -1,6 +1,11 @@
+use core::str::SplitN;
 
 pub trait HTML {
     fn to_html(&self) -> String;
+}
+
+pub trait MarkDown {
+    fn from_markdown(s: &str) -> Self;
 }
 
 pub struct Document {
@@ -23,15 +28,30 @@ pub struct Heading{
     pub text: String
 }
 
+impl MarkDown for Heading {
+    fn from_markdown(s: &str) -> Heading {
+        let mut line: SplitN<&str> = s.splitn(2, " ");
+        let hashes = line.next().unwrap();
+        let text = line.next().unwrap();
+        return Heading{level: hashes.chars().count() as u8, text:String::from(text)};
+    }
+}
+
 impl HTML for Heading {
     fn to_html(&self) -> String {
-        return format!("<h{}>{}</h>\n", self.level.to_string(), self.text);
+        return format!("<h{}>{}</h{}>\n", self.level.to_string(), self.text, self.level.to_string());
     }
 }
 
 #[derive(Debug)]
 pub struct Paragraph{
     pub text: String
+}
+
+impl MarkDown for Paragraph {
+    fn from_markdown(s: &str) -> Paragraph {
+        return Paragraph{text: String::from(s)}
+    }
 }
 
 impl HTML for Paragraph {
