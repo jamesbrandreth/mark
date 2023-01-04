@@ -1,4 +1,4 @@
-use core::str::{Split, SplitN};
+use core::str::{SplitN};
 
 pub trait HTML {
     fn to_html(&self) -> String;
@@ -32,7 +32,15 @@ impl HTML for Document {
         for el in &self.body {
             s = s + &el.to_html();
         }
-        return s;
+        return format!("<!DOCTYPE html>
+<html>
+<head>
+<title>This is a title</title>
+</head>
+<body>
+{}
+</body>
+</html>", s);
     }
 }
 
@@ -70,6 +78,6 @@ impl MarkDown for Paragraph {
 
 impl HTML for Paragraph {
     fn to_html(&self) -> String {
-        return format!("<p>\n{}\n</p>", self.text);
+        return format!("<p>\n{}\n</p>\n", self.text);
     }
 }
