@@ -1,4 +1,4 @@
-use core::str::SplitN;
+use core::str::{Split, SplitN};
 
 pub trait HTML {
     fn to_html(&self) -> String;
@@ -10,6 +10,20 @@ pub trait MarkDown {
 
 pub struct Document {
     pub body: Vec<Box<dyn HTML>>
+}
+
+impl MarkDown for Document {
+    fn from_markdown(s: &str) -> Self {
+        let mut body: Vec<Box<dyn HTML>> = vec![];
+        for element in s.split("\n\n"){
+            if element.chars().nth(0).unwrap() == '#' {
+                body.push(Box::new(Heading::from_markdown(element)));
+            } else {
+                body.push(Box::new(Paragraph::from_markdown(element)));
+            }
+        }
+        return Document{body: body};
+    }
 }
 
 impl HTML for Document {
