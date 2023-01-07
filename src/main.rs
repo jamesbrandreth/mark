@@ -10,6 +10,7 @@ use elements::heading::Heading;
 use elements::paragraph::Paragraph;
 use elements::thematic_break::ThematicBreak;
 use elements::code::Code;
+use elements::html::RawHTML;
 
 fn main() {
     let d = Document{children: vec![
@@ -21,6 +22,7 @@ fn main() {
         Box::new(Code{text: String::from("Two three four")}),
         Box::new(Heading{level: 3, text: String::from("Three")}),
         Box::new(Paragraph{text: String::from("Three")}),
+        Box::new(RawHTML{text: String::from("<div>Three</div>")}),
     ]};
     println!("{}", d.to_html());
 }
