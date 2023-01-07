@@ -3,3 +3,4 @@ pub mod paragraph;
 pub mod thematic_break;
 pub mod code;
 pub mod html;
+pub mod link;
