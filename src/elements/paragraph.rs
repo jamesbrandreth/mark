@@ -16,7 +16,7 @@ impl MarkDown for Paragraph {
 impl HTML for Paragraph {
     fn to_html(&self) -> String {
         return format!(
-                "<p>\n{}\n</p>\n",
+                "<p>{}</p>",
             self.text
         );
     }
