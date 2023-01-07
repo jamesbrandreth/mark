@@ -1,4 +1,3 @@
-use core::str::{SplitN};
 use regex::Regex;
 
 use crate::traits::{HTML, MarkDown};

@@ -11,6 +11,8 @@ use blocks::leaves::paragraph::Paragraph;
 use blocks::leaves::thematic_break::ThematicBreak;
 use blocks::leaves::code::Code;
 use blocks::leaves::html::RawHTML;
+use blocks::containers::block_quote::BlockQuote;
+
 
 fn main() {
     let d = Document{children: vec![
@@ -23,6 +25,8 @@ fn main() {
         Box::new(Heading{level: 3, text: String::from("Three")}),
         Box::new(Paragraph{text: String::from("Three")}),
         Box::new(RawHTML{text: String::from("<div>Three</div>")}),
+        Box::new(Heading{level: 4, text: String::from("Four")}),
+        Box::new(BlockQuote{children: vec![Box::new(Paragraph{text: String::from("<div>Three</div>")})]}),
     ]};
     println!("{}", d.to_html());
 }
