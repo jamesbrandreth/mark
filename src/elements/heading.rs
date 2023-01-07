@@ -1,6 +1,5 @@
 use core::str::{SplitN};
 
-
 use crate::traits::{HTML, MarkDown};
 
 #[derive(Debug)]
