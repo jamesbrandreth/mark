@@ -1,78 +1,48 @@
 use core::str::{SplitN};
 use regex::Regex;
 
-pub trait HTML {
-    fn to_html(&self) -> String;
-}
-
-pub trait MarkDown {
-    fn from_markdown(s: &str) -> Self;
-}
+use crate::traits::{HTML, MarkDown};
+use crate::elements::heading::Heading;
 
 pub struct Document {
-    pub body: Vec<Box<dyn HTML>>
+    pub children: Vec<Box<dyn HTML>>,
 }
 
 impl MarkDown for Document {
-    fn from_markdown(s: &str) -> Self {
-        let mut body: Vec<Box<dyn HTML>> = vec![];
-        for element in s.split("\n\n"){
-            if element.chars().nth(0).unwrap() == '#' {
-                body.push(Box::new(Heading::from_markdown(element)));
+    fn from_markdown(s: &str) -> Document {
+
+        let re_blankline = Regex::new(r"^\s*$").unwrap();
+        let re_heading_line = Regex::new(r"^(#)+\s*(\w)\s*#*$").unwrap();
+
+        let mut root = Document{children: vec![]};
+        let mut node = &mut root;
+        for line in s.split("\n") {
+
+            if re_blankline.is_match(line) {
+                break;
+            } else if re_heading_line.is_match(line) {
+                let caps = re_heading_line.captures(line).unwrap();
+                let level = caps.get(1).unwrap().as_str().chars().count() as u8;
+                let text = String::from(caps.get(2).unwrap().as_str());
+                node.children.push(Box::new(Heading{level: level, text: text}));
             } else {
-                body.push(Box::new(Paragraph::from_markdown(element)));
+
             }
         }
-        return Document{body: body};
+        return root;
     }
 }
 
 impl HTML for Document {
     fn to_html(&self) -> String {
         let mut s: String = String::from("");
-        for el in &self.body {
+        for el in &self.children {
             s = s + &el.to_html();
         }
-        return format!("<!DOCTYPE html>
-<html>
-<head>
-<title>This is a title</title>
-</head>
-<body>
-{}
-</body>
-</html>", s);
+        return format!("<!DOCTYPE html><html><head><title>This is a title</title></head><body>{}</body></html>", s);
     }
 }
 
-#[derive(Debug)]
-pub struct Heading{
-    pub level: u8,
-    pub text: String
-}
-
-impl MarkDown for Heading {
-    fn from_markdown(s: &str) -> Heading {
-        let mut line: SplitN<&str> = s.splitn(2, " ");
-        let hashes = line.next().unwrap();
-        let text = line.next().unwrap();
-        return Heading{
-            level: hashes.chars().count() as u8,
-            text:String::from(text)
-        };
-    }
-}
-
-impl HTML for Heading {
-    fn to_html(&self) -> String {
-        return format!(
-            "<h{}>{}</h{}>\n",
-            self.level.to_string(),
-            self.text,
-            self.level.to_string()
-        );
-    }
-}
 
 #[derive(Debug)]
 pub struct Paragraph{
