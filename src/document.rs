@@ -1,4 +1,5 @@
 use core::str::{SplitN};
+use regex::Regex;
 
 pub trait HTML {
     fn to_html(&self) -> String;
@@ -55,13 +56,21 @@ impl MarkDown for Heading {
         let mut line: SplitN<&str> = s.splitn(2, " ");
         let hashes = line.next().unwrap();
         let text = line.next().unwrap();
-        return Heading{level: hashes.chars().count() as u8, text:String::from(text)};
+        return Heading{
+            level: hashes.chars().count() as u8,
+            text:String::from(text)
+        };
     }
 }
 
 impl HTML for Heading {
     fn to_html(&self) -> String {
-        return format!("<h{}>{}</h{}>\n", self.level.to_string(), self.text, self.level.to_string());
+        return format!(
+            "<h{}>{}</h{}>\n",
+            self.level.to_string(),
+            self.text,
+            self.level.to_string()
+        );
     }
 }
 
@@ -72,12 +81,17 @@ pub struct Paragraph{
 
 impl MarkDown for Paragraph {
     fn from_markdown(s: &str) -> Paragraph {
-        return Paragraph{text: String::from(s)}
+        return Paragraph{
+            text: String::from(s)
+        }
     }
 }
 
 impl HTML for Paragraph {
     fn to_html(&self) -> String {
-        return format!("<p>\n{}\n</p>\n", self.text);
+        return format!(
+            "<p>\n{}\n</p>\n",
+            self.text
+        );
     }
 }
