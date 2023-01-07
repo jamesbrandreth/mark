@@ -1,16 +1,16 @@
 use std::fs;
 
-pub mod elements;
+pub mod blocks;
 pub mod traits;
 mod document;
 
 use document::{Document};
 use traits::{HTML, MarkDown};
-use elements::heading::Heading;
-use elements::paragraph::Paragraph;
-use elements::thematic_break::ThematicBreak;
-use elements::code::Code;
-use elements::html::RawHTML;
+use blocks::leaves::heading::Heading;
+use blocks::leaves::paragraph::Paragraph;
+use blocks::leaves::thematic_break::ThematicBreak;
+use blocks::leaves::code::Code;
+use blocks::leaves::html::RawHTML;
 
 fn main() {
     let d = Document{children: vec![

@@ -2,8 +2,8 @@ use core::str::{SplitN};
 use regex::Regex;
 
 use crate::traits::{HTML, MarkDown};
-use crate::elements::heading::Heading;
-use crate::elements::paragraph::Paragraph;
+use crate::blocks::leaves::heading::Heading;
+use crate::blocks::leaves::paragraph::Paragraph;
 
 pub struct Document {
     pub children: Vec<Box<dyn HTML>>,
