@@ -1,5 +1,3 @@
-
-
 pub mod blocks;
 pub mod traits;
 mod document;
@@ -58,7 +56,27 @@ fn main() {
         Box::new(UnorderedList{children: vec![ListItem{children: vec![Box::new(Paragraph{text: String::from("Test list")})]}]}),
 
         Box::new(Heading{level: 1, text: String::from("Ordered List")}),
-        Box::new(OrderedList{start: 1, children: vec![ListItem{children: vec![Box::new(Paragraph{text: String::from("Test list")})]}]}),
+        Box::new(OrderedList{
+            start: 1,
+            children: vec![
+                ListItem{children: vec![
+                    Box::new(Paragraph{text: String::from("Test list")})
+                ]},
+                ListItem{children: vec![
+                    Box::new(OrderedList{
+                        start: 1,
+                        children: vec![
+                            ListItem{children: vec![
+                                Box::new(Paragraph{text: String::from("Sub list")})
+                            ]},
+                            ListItem{children: vec![
+                                Box::new(Paragraph{text: String::from("Sub list")})
+                            ]},
+                        ]
+                    })
+                ]},
+            ]
+        }),
     ]};
     println!("{}", d.to_html());
 }
