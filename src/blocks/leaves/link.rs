@@ -1,4 +1,4 @@
-use crate::traits::{HTML, MarkDown};
+use crate::traits::{HTML};
 
 #[derive(Debug)]
 pub struct Link{

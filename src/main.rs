@@ -1,21 +1,28 @@
-use std::fs;
+
 
 pub mod blocks;
 pub mod traits;
 mod document;
 
 use document::Document;
-use traits::{HTML, MarkDown};
-use blocks::leaves::heading::Heading;
-use blocks::leaves::paragraph::Paragraph;
-use blocks::leaves::thematic_break::ThematicBreak;
-use blocks::leaves::code::Code;
-use blocks::leaves::html::RawHTML;
-use blocks::leaves::link::Link;
-use blocks::containers::block_quote::BlockQuote;
-use blocks::containers::list_item::ListItem;
-use blocks::containers::unordered_list::UnorderedList;
-use blocks::containers::ordered_list::OrderedList;
+use traits::HTML;
+use blocks::{
+    leaves::{
+        heading::Heading,
+        paragraph::Paragraph,
+        thematic_break::ThematicBreak,
+        code::Code,
+        html::RawHTML,
+        link::Link,
+},
+    containers::{
+        block_quote::BlockQuote,
+        list_item::ListItem,
+        unordered_list::UnorderedList,
+        ordered_list::OrderedList
+    }
+};
+
 
 
 fn main() {

@@ -2,7 +2,7 @@ use regex::Regex;
 
 use crate::traits::{HTML, MarkDown};
 use crate::blocks::leaves::heading::Heading;
-use crate::blocks::leaves::paragraph::Paragraph;
+
 
 pub struct Document {
     pub title: String,
@@ -16,7 +16,7 @@ impl MarkDown for Document {
         let re_heading_line = Regex::new(r"^(#)+\s*(\w)\s*#*$").unwrap();
 
         let mut root = Document{title: String::from(""), children: vec![]};
-        let mut node = &mut root;
+        let node = &mut root;
         for line in s.split("\n") {
 
             if re_blankline.is_match(line) {
