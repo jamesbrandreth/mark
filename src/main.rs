@@ -4,7 +4,7 @@ pub mod blocks;
 pub mod traits;
 mod document;
 
-use document::{Document};
+use document::Document;
 use traits::{HTML, MarkDown};
 use blocks::leaves::heading::Heading;
 use blocks::leaves::paragraph::Paragraph;
@@ -19,7 +19,9 @@ use blocks::containers::ordered_list::OrderedList;
 
 
 fn main() {
-    let d = Document{children: vec![
+    let d = Document{
+        title: String::from("Title"),
+        children: vec![
 
         Box::new(Heading{level: 1, text: String::from("Thematic Break")}),
         Box::new(ThematicBreak{}),
