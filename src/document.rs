@@ -6,6 +6,7 @@ use crate::blocks::leaves::heading::Heading;
 
 pub struct Document {
     pub title: String,
+    pub style: Option<String>,
     pub children: Vec<Box<dyn HTML>>,
 }
 
@@ -15,7 +16,7 @@ impl MarkDown for Document {
         let re_blankline = Regex::new(r"^\s*$").unwrap();
         let re_heading_line = Regex::new(r"^(#)+\s*(\w)\s*#*$").unwrap();
 
-        let mut root = Document{title: String::from(""), children: vec![]};
+        let mut root = Document{title: String::from(""), style: None, children: vec![]};
         let node = &mut root;
         for line in s.split("\n") {
 
@@ -40,7 +41,11 @@ impl HTML for Document {
         for el in &self.children {
             s = s + &el.to_html();
         }
-        return format!("<!DOCTYPE html><html><head><title>{}</title></head><body>{}</body></html>", self.title, s);
+        let style: String = match &self.style {
+            None => String::from(""),
+            Some(s) => format!("<link rel=\"stylesheet\" href=\"{}\">", s),
+        };
+        return format!("<!DOCTYPE html><html><head>{}<title>{}</title></head><body>{}</body></html>", style,  self.title, s);
     }
 }
 

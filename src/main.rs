@@ -26,6 +26,7 @@ use blocks::{
 fn main() {
     let d = Document{
         title: String::from("Title"),
+        style: Some(String::from("./test.css")),
         children: vec![
 
         Box::new(Heading{level: 1, text: String::from("Thematic Break")}),
