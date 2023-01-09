@@ -24,60 +24,75 @@ use blocks::{
 
 
 fn main() {
-    let d = Document{
-        title: String::from("Title"),
-        style: Some(String::from("./test.css")),
-        children: vec![
+    parsing();
+}
 
-        Box::new(Heading{level: 1, text: String::from("Thematic Break")}),
-        Box::new(ThematicBreak{}),
+fn parsing() {
+    let s = String::from("
+> Testing
+>
+> 123
+    ");
+    for line in s.split("\n") {
+        println!("{}", line);
+    }
+}
 
-        Box::new(Heading{level: 1, text: String::from("Heading")}),
-        Box::new(Heading{level: 2, text: String::from("Heading")}),
-        Box::new(Heading{level: 3, text: String::from("Heading")}),
-        Box::new(Heading{level: 4, text: String::from("Heading")}),
-        Box::new(Heading{level: 5, text: String::from("Heading")}),
-
-        Box::new(Heading{level: 1, text: String::from("Code")}),
-        Box::new(Code{text: String::from("print(\"hello world\")")}),
-
-        Box::new(Heading{level: 1, text: String::from("HTML")}),
-        Box::new(RawHTML{text: String::from("<div>Three</div>")}),
-
-        Box::new(Heading{level: 1, text: String::from("Link")}),
-        Box::new(Link{label: String::from("README.md"), destination: String::from("README.md")}),
-
-        Box::new(Heading{level: 1, text: String::from("Paragraph")}),
-        Box::new(Paragraph{text: String::from("Lorem Ipsem")}),
-
-        Box::new(Heading{level: 1, text: String::from("Block Quote")}),
-        Box::new(BlockQuote{children: vec![Box::new(Paragraph{text: String::from("Lorem Ipsem.")})]}),
-
-        Box::new(Heading{level: 1, text: String::from("Unordered List")}),
-        Box::new(UnorderedList{children: vec![ListItem{children: vec![Box::new(Paragraph{text: String::from("Test list")})]}]}),
-
-        Box::new(Heading{level: 1, text: String::from("Ordered List")}),
-        Box::new(OrderedList{
-            start: 1,
+fn print_doc() {
+        let d = Document{
+            title: String::from("Title"),
+            style: Some(String::from("./test.css")),
             children: vec![
-                ListItem{children: vec![
-                    Box::new(Paragraph{text: String::from("Test list")})
-                ]},
-                ListItem{children: vec![
-                    Box::new(OrderedList{
-                        start: 1,
-                        children: vec![
-                            ListItem{children: vec![
-                                Box::new(Paragraph{text: String::from("Sub list")})
-                            ]},
-                            ListItem{children: vec![
-                                Box::new(Paragraph{text: String::from("Sub list")})
-                            ]},
-                        ]
-                    })
-                ]},
-            ]
-        }),
-    ]};
-    println!("{}", d.to_html());
+
+            Box::new(Heading{level: 1, text: String::from("Thematic Break")}),
+            Box::new(ThematicBreak{}),
+
+            Box::new(Heading{level: 1, text: String::from("Heading")}),
+            Box::new(Heading{level: 2, text: String::from("Heading")}),
+            Box::new(Heading{level: 3, text: String::from("Heading")}),
+            Box::new(Heading{level: 4, text: String::from("Heading")}),
+            Box::new(Heading{level: 5, text: String::from("Heading")}),
+
+            Box::new(Heading{level: 1, text: String::from("Code")}),
+            Box::new(Code{text: String::from("print(\"hello world\")")}),
+
+            Box::new(Heading{level: 1, text: String::from("HTML")}),
+            Box::new(RawHTML{text: String::from("<div>Three</div>")}),
+
+            Box::new(Heading{level: 1, text: String::from("Link")}),
+            Box::new(Link{label: String::from("README.md"), destination: String::from("README.md")}),
+
+            Box::new(Heading{level: 1, text: String::from("Paragraph")}),
+            Box::new(Paragraph{text: String::from("Lorem Ipsem")}),
+
+            Box::new(Heading{level: 1, text: String::from("Block Quote")}),
+            Box::new(BlockQuote{children: vec![Box::new(Paragraph{text: String::from("Lorem Ipsem.")})]}),
+
+            Box::new(Heading{level: 1, text: String::from("Unordered List")}),
+            Box::new(UnorderedList{children: vec![ListItem{children: vec![Box::new(Paragraph{text: String::from("Test list")})]}]}),
+
+            Box::new(Heading{level: 1, text: String::from("Ordered List")}),
+            Box::new(OrderedList{
+                start: 1,
+                children: vec![
+                    ListItem{children: vec![
+                        Box::new(Paragraph{text: String::from("Test list")})
+                    ]},
+                    ListItem{children: vec![
+                        Box::new(OrderedList{
+                            start: 1,
+                            children: vec![
+                                ListItem{children: vec![
+                                    Box::new(Paragraph{text: String::from("Sub list")})
+                                ]},
+                                ListItem{children: vec![
+                                    Box::new(Paragraph{text: String::from("Sub list")})
+                                ]},
+                            ]
+                        })
+                    ]},
+                ]
+            }),
+        ]};
+        println!("{}", d.to_html());
 }
