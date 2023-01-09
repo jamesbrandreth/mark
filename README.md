@@ -1,10 +1,10 @@
-# MarkRight
+# James's Markdown
 
 These documents are equivalent:
 
 <table>
 <tr>
-<th>MarkRight</th>
+<th>Mark</th>
 <th>LaTeX</th>
 </tr>
 <tr>
