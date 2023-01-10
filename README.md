@@ -5,7 +5,7 @@ These documents are equivalent:
 <table>
 <tr>
 <th>Mark</th>
-<th>LaTeX</th>
+<th>HTML</th>
 </tr>
 <tr>
 <td>
@@ -14,7 +14,6 @@ These documents are equivalent:
 ---
 version: 0.0
 title: A Test Mark Document
-class: article
 date: 2022-10-06
 ---
 
@@ -27,18 +26,10 @@ Here's some text.
 <td>
 
 ```
-\documentclass{article}
-\title{A Test Mark Document}
-\date{2022-10-06}
-
-\begin{document}
-
-\maketitle
-
-\section{Here's a heading}
-Here's some text.
-
-\subsection{Here's a subheading}
+<h1>A Test Mark Document</h1>
+<h1>Here's a heading</h1>
+<p>Here's some text.</p>
+<h2>Here's a subheading</h2>
 ```
 
 </td>
