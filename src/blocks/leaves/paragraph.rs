@@ -1,16 +1,15 @@
-use crate::traits::{HTML, MarkDown};
+use std::rc::Rc;
 
-#[derive(Debug)]
+use crate::traits::{HTML};
+
 pub struct Paragraph{
-    pub text: String
+    pub text: String,
+    pub parent: Rc<Box<dyn HTML>>,
 }
 
-impl MarkDown for Paragraph {
-    fn from_markdown(s: &str) -> Paragraph {
-        return Paragraph{
-            text: String::from(s)
-        }
-    }
+impl Paragraph {
+    pub const OPEN_RULE: &str = r"^\w+";
+    pub const CLOSE_RULE: &str = r"^\w+";
 }
 
 impl HTML for Paragraph {
