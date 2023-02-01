@@ -6,15 +6,14 @@ use std::collections::HashMap;
 
 pub fn main() -> Result<(), Box<dyn Error>> {
 
-    let mut templates: Vec<(String, String)> = vec![];
     let mut tt = TinyTemplate::new();
 
-    for entry in fs::read_dir("./default").unwrap() {
+    let templates: Vec<(String, String)> = fs::read_dir("./default").unwrap().map(|entry| {
         let path = entry.unwrap().path();
         let file_name = String::from(path.file_stem().unwrap().to_str().unwrap());
         let template = fs::read_to_string(&path).unwrap();
-        templates.push((file_name, template));
-    }
+        (file_name, template)
+    }).collect();
 
     for (name, template) in templates.iter() {
         tt.add_template(&name, &template);
