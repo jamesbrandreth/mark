@@ -12,7 +12,7 @@ use element::Element;
 
 pub fn main() -> Result<(), Box<dyn Error>> {
 
-    let templates: Vec<(String, String)> = fs::read_dir("./default").unwrap().map(|entry| {
+    let templates: Vec<(String, String)> = fs::read_dir("./templates/default").unwrap().map(|entry| {
         let path = entry.unwrap().path();
         let file_name = String::from(path.file_stem().unwrap().to_str().unwrap());
         let template = fs::read_to_string(&path).unwrap();
