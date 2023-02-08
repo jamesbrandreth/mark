@@ -17,6 +17,7 @@ pub fn main() -> Result<(), Box<dyn Error>> {
     }).collect();
 
     let mut tt = TinyTemplate::new();
+    tt.set_default_formatter(&tinytemplate::format_unescaped);
     for (name, template) in templates.iter() {
         match tt.add_template(&name, &template) {
             Ok(_) => {},
@@ -30,19 +31,27 @@ pub fn main() -> Result<(), Box<dyn Error>> {
             "Some test text element.".to_string(),
         );
 
-    let mut root = Element{
-        template: "paragraph".to_string(),
-        content: HashMap::new(),
+    let root = Element{
+        template: "document".to_string(),
+        content: HashMap::from([
+            ("title".to_string(), "A Test Document".to_string()),
+        ]),
         parent: None,
-        children: vec![],
+        children: vec![Element{
+            template: "paragraph".to_string(),
+            content: HashMap::new(),
+            parent: None,
+            children: vec![
+                Element{
+                    template: "text".to_string(),
+                    content: context,
+                    parent: None,
+                    children: vec![],
+                }
+            ],
+        }],
     };
 
-    root.children.push(Element{
-        template: "text".to_string(),
-        content: context,
-        parent: None,
-        children: vec![],
-    });
 
     let rendered = element::render_element(&root, &tt);
     println!("{}", rendered);
