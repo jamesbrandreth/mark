@@ -59,14 +59,15 @@ pub fn main() -> Result<(), Box<dyn Error>> {
                         parent: None,
                         children: vec![],
                     },
-                    Element{
-                    template: "line".to_string(),
-                        content: HashMap::new(),
-                        parent: None,
-                        children: vec![],
-                    },
                 ],
-        }],
+            },
+            Element{
+                template: "line".to_string(),
+                content: HashMap::new(),
+                parent: None,
+                children: vec![],
+            },
+        ],
     };
 
 
