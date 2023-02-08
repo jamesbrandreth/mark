@@ -1,10 +1,7 @@
 use std::fs;
-use std::rc::Rc;
-use std::cell::RefCell;
-use tinytemplate::TinyTemplate;
 use std::error::Error;
 use std::collections::HashMap;
-use serde::ser::{Serialize, Serializer, SerializeMap};
+use tinytemplate::TinyTemplate;
 
 mod element;
 use element::Element;
@@ -21,7 +18,10 @@ pub fn main() -> Result<(), Box<dyn Error>> {
 
     let mut tt = TinyTemplate::new();
     for (name, template) in templates.iter() {
-        tt.add_template(&name, &template);
+        match tt.add_template(&name, &template) {
+            Ok(_) => {},
+            Err(_) => {panic!("Error loading template: {}", template)},
+        };
     }
 
     let mut context: HashMap<String, String> = HashMap::new();

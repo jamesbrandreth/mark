@@ -1,10 +1,8 @@
-use std::fs;
 use std::rc::Rc;
 use std::cell::RefCell;
-use tinytemplate::TinyTemplate;
-use std::error::Error;
 use std::collections::HashMap;
-use serde::ser::{Serialize, Serializer, SerializeMap, SerializeStruct};
+
+use tinytemplate::TinyTemplate;
 
 pub struct Element {
     pub template: String,
@@ -12,7 +10,6 @@ pub struct Element {
     pub parent: Option<Rc<RefCell<Box<Element>>>>,
     pub children: Vec<Element>,
 }
-
 
 pub fn render_element(element: &Element, renderer: &TinyTemplate) -> String{
     let children = element.children.iter().map(|child: &Element| {
