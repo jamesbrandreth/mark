@@ -1,5 +1,4 @@
 use std::fs;
-use glob::glob;
 use std::error::Error;
 use std::collections::HashMap;
 use tinytemplate::TinyTemplate;
