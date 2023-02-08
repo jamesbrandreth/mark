@@ -25,30 +25,42 @@ pub fn main() -> Result<(), Box<dyn Error>> {
         };
     }
 
-    let mut context: HashMap<String, String> = HashMap::new();
-    context.insert(
-            "body".to_string(),
-            "Some test text element.".to_string(),
-        );
-
     let root = Element{
         template: "document".to_string(),
         content: HashMap::from([
             ("title".to_string(), "A Test Document".to_string()),
         ]),
         parent: None,
-        children: vec![Element{
-            template: "paragraph".to_string(),
-            content: HashMap::new(),
-            parent: None,
-            children: vec![
-                Element{
-                    template: "text".to_string(),
-                    content: context,
+        children: vec![
+            Element{
+                template: "heading".to_string(),
+                content: HashMap::from([
+                        ("level".to_string(), "1".to_string()),
+                        ("text".to_string(), "A Level 1 Heading".to_string()),
+                    ]),
                     parent: None,
                     children: vec![],
-                }
-            ],
+                    },
+            Element{
+                template: "paragraph".to_string(),
+                content: HashMap::new(),
+                parent: None,
+                children: vec![
+                    Element{
+                    template: "text".to_string(),
+                        content: HashMap::from([
+                            ("body".to_string(), "Some test text element.".to_string()),
+                        ]),
+                        parent: None,
+                        children: vec![],
+                    },
+                    Element{
+                    template: "line".to_string(),
+                        content: HashMap::new(),
+                        parent: None,
+                        children: vec![],
+                    },
+                ],
         }],
     };
 
