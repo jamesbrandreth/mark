@@ -6,6 +6,8 @@ use tinytemplate::TinyTemplate;
 mod element;
 use element::Element;
 
+mod parser;
+
 
 pub fn main() -> Result<(), Box<dyn Error>> {
 

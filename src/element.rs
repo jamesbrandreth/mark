@@ -4,6 +4,7 @@ use std::collections::HashMap;
 
 use tinytemplate::TinyTemplate;
 
+#[derive(Debug, PartialEq, Eq)]
 pub struct Element {
     pub template: String,
     pub content: HashMap<String, String>,
