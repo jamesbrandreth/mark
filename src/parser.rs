@@ -2,6 +2,7 @@ use std::rc::Rc;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use crate::element::Element;
+use regex::Regex;
 
 fn new_document(title: &str) -> Element {
     Element {
@@ -14,7 +15,7 @@ fn new_document(title: &str) -> Element {
     }
 }
 
-fn new_text(s: &str, parent: Option<Rc<RefCell<Box<Element>>>>) -> Element {
+fn new_text<'a>(s: &str, parent: Option<&'a Element<'a>>) -> Element<'a> {
     Element {
         template: "text".to_string(),
         content: HashMap::from([
@@ -25,29 +26,35 @@ fn new_text(s: &str, parent: Option<Rc<RefCell<Box<Element>>>>) -> Element {
     }
 }
 
-fn new_paragraph(s: &str, parent: Option<Rc<RefCell<Box<Element>>>>) -> Element {
+fn new_paragraph<'a>(s: &str) -> Element<'a> {
     Element {
         template: "paragraph".to_string(),
         content: HashMap::from([]),
-        parent: parent,
+        parent: None,
         children: vec![],
     }
 }
 
 pub fn parse(s: &str) -> Element {
 
-    let mut stack: Vec<Rc<RefCell<Box<Element>>>> = vec![];
-    let mut root: Element = new_document("test title");
-    stack.push(Rc::new(RefCell::new(Box::new(root))));
+    let paragraph_rule = Regex::new(r"^\w").unwrap();
 
-    for line in String::from(s).lines() {
+    let mut stack: Vec<&mut Element> = vec![];
+    let mut root: Element = new_document("test title");
+    stack.push(&mut root);
+
+    for line in s.lines() {
         println!("{}", line);
-        for element in stack {
-            
+        println!("{}", paragraph_rule.is_match(line)) ;
+
+        if paragraph_rule.is_match(line) {
+            stack.last_mut().unwrap().add_child(
+                    new_paragraph(line)
+            );
         }
     }
 
-   return root;
+    return root;
 }
 
 #[cfg(test)]
@@ -59,7 +66,7 @@ mod tests {
     #[test]
     fn test_paragraph() {
         assert_eq!(
-            parse("tests\n"),
+            parse("tests\n\ntesting\n"),
             Element{
                 template: "paragraph".to_string(),
                 content: HashMap::from([]),
