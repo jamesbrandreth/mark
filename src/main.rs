@@ -31,50 +31,22 @@ pub fn main() -> Result<(), Box<dyn Error>> {
         };
     }
 
-    let root = Element{
-        template: "document".to_string(),
-        content: HashMap::from([
-            ("title".to_string(), "A Test Document".to_string()),
-            ("style".to_string(), styles),
-        ]),
-        parent: None,
-        children: vec![
-            Element{
-                template: "heading".to_string(),
-                content: HashMap::from([
-                        ("level".to_string(), "1".to_string()),
-                        ("text".to_string(), "A Level 1 Heading".to_string()),
-                    ]),
-                    parent: None,
-                    children: vec![],
-                    },
-            Element{
-                template: "paragraph".to_string(),
-                content: HashMap::new(),
-                parent: None,
-                children: vec![
-                    Element{
-                    template: "text".to_string(),
-                        content: HashMap::from([
-                            ("body".to_string(), "Some test text element.".to_string()),
-                        ]),
-                        parent: None,
-                        children: vec![],
-                    },
-                ],
-            },
-            Element{
-                template: "line".to_string(),
-                content: HashMap::new(),
-                parent: None,
-                children: vec![],
-            },
-        ],
-    };
+    let root = Element::new("document".to_string(),
+            HashMap::from([
+                ("title".to_string(),"test".to_string()),
+                ("style".to_string(),"default".to_string()),
+            ]));
+    let mut current_node: Element = root.clone();
 
+    let paragraph = Element::new(
+            "paragraph".to_string(),
+            HashMap::new(),
+    );
+    current_node.add_child(paragraph.clone());
+    current_node = paragraph;
 
-    let rendered = element::render_element(&root, &tt);
-    println!("{}", rendered);
+    println!("{}", root);
+    println!("{}", root.render(&tt));
 
     Ok(())
 }
