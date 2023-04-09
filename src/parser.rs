@@ -1,5 +1,5 @@
-use std::rc::Rc;
-use std::cell::RefCell;
+
+
 use std::collections::HashMap;
 use regex::Regex;
 
@@ -23,7 +23,7 @@ fn new_text(s: &str) -> Element {
     )
 }
 
-fn new_paragraph(s: &str) -> Element {
+fn new_paragraph(_s: &str) -> Element {
     Element::new(
             "paragraph".to_string(),
             HashMap::from([]),
@@ -34,7 +34,7 @@ pub fn parse(s: &str) -> Element {
 
     let paragraph_rule = Regex::new(r"^\w").unwrap();
 
-    let mut root = new_document("test title");
+    let root = new_document("test title");
     let mut node: Element = root.clone();
 
     for line in s.lines() {
@@ -51,9 +51,9 @@ pub fn parse(s: &str) -> Element {
 mod tests {
     use std::collections::HashMap;
     use crate::element::Element;
-    use super::parse;
-    use std::rc::Rc;
-    use std::cell::RefCell;
+    
+    
+    
 
     #[test]
     fn test_paragraph() {

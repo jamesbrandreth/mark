@@ -18,7 +18,7 @@ pub fn main() -> Result<(), Box<dyn Error>> {
         (file_name, template)
     }).collect();
 
-    let styles: String = glob::glob("./templates/default/*.css").unwrap().map(|entry| {
+    let _styles: String = glob::glob("./templates/default/*.css").unwrap().map(|entry| {
         fs::read_to_string(entry.unwrap().as_path()).unwrap()
     }).collect::<String>();
 
